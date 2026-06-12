@@ -370,9 +370,9 @@ Request có API key:
 
 - Public URL: `https://mellow-reprieve-production-3e08.up.railway.app`
 - Platform: Railway
-- Screenshot dashboard: [deployment-dashboard.png](../screenshots/deployment-dashboard.png)
-- Screenshot service running: [service-running.png](../screenshots/service-running.png)
-- Screenshot test result: [test-results.png](../screenshots/test-results.png)
+- Screenshot dashboard: [deployment-dashboard.png](screenshots/deployment-dashboard.png)
+- Screenshot service running: [service-running.png](screenshots/service-running.png)
+- Screenshot test result: [test-results.png](screenshots/test-results.png)
 
 Public health check:
 
