@@ -26,9 +26,9 @@ Kết hợp TẤT CẢ những gì đã học trong 1 project hoàn chỉnh.
 ├── app/
 │   ├── main.py         # Entry point — kết hợp tất cả
 │   ├── config.py       # 12-factor config
-│   ├── auth.py         # API Key + JWT
-│   ├── rate_limiter.py # Rate limiting
-│   └── cost_guard.py   # Budget protection
+│   ├── auth.py         # API Key authentication
+│   ├── rate_limiter.py # Redis sliding-window rate limiting
+│   └── cost_guard.py   # Monthly budget protection
 ├── Dockerfile          # Multi-stage, production-ready
 ├── docker-compose.yml  # Full stack
 ├── railway.toml        # Deploy Railway
@@ -44,18 +44,19 @@ Kết hợp TẤT CẢ những gì đã học trong 1 project hoàn chỉnh.
 
 ```bash
 # 1. Setup
-cp .env.example .env
+cp .env.example .env.local
+# Sửa AGENT_API_KEY và JWT_SECRET trong .env.local
 
 # 2. Chạy với Docker Compose
 docker compose up
 
 # 3. Test
-curl http://localhost/health
+curl http://localhost:8000/health
 
-# 4. Lấy API key từ .env, test endpoint
-API_KEY=$(grep AGENT_API_KEY .env | cut -d= -f2)
+# 4. Lấy API key từ .env.local, test endpoint
+API_KEY=$(grep AGENT_API_KEY .env.local | cut -d= -f2)
 curl -H "X-API-Key: $API_KEY" \
-     -X POST http://localhost/ask \
+     -X POST http://localhost:8000/ask \
      -H "Content-Type: application/json" \
      -d '{"question": "What is deployment?"}'
 ```
@@ -94,7 +95,7 @@ railway domain
 ## Kiểm Tra Production Readiness
 
 ```bash
-python check_production_ready.py
+python -X utf8 check_production_ready.py
 ```
 
 Script này kiểm tra tất cả items trong checklist và báo cáo những gì còn thiếu.
